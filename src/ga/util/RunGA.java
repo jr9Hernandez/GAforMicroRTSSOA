@@ -12,7 +12,7 @@ public class RunGA {
 	
 	private Population population;
 	private Instant timeInicial;
-	private int generations;
+	private int generations=0;
 	
 	/**
 	 * Este metodo aplicará todas as fases do processo de um algoritmo Genético
@@ -23,7 +23,7 @@ public class RunGA {
 		population = Population.getInitialPopulation(ConfigurationsGA.SIZE_POPULATION);
 		
 		//Fase 2 = avalia a população
-		population = evalFunction.evalPopulation(population); 
+		population = evalFunction.evalPopulation(population,this.generations); 
 		
 		resetControls();
 		//Fase 3 = critério de parada
@@ -34,7 +34,7 @@ public class RunGA {
 			population = selecao.applySelection(population);
 			
 			//Repete-se Fase 2 = Avaliação da população
-			population = evalFunction.evalPopulation(population);
+			population = evalFunction.evalPopulation(population,this.generations);
 			
 			//atualiza a geração
 			updateGeneration();

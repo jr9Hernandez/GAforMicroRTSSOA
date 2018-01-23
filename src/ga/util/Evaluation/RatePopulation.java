@@ -9,5 +9,6 @@ public interface RatePopulation {
 	*  KEYS   = Cromossomo
 	*  VALUES = Valor da avaliação 
 	*/
-	public Population evalPopulation(Population population);
+	public Population evalPopulation(Population population, int generation);
+	public void finishProcess();
 }

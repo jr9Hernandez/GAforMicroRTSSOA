@@ -1,6 +1,8 @@
 #!/bin/bash
 
-cd /storage1/dados/es91661/ExecAIGA
+cd /storage1/dados/es91661/ExecAIGASOA
+
+RESULTS=/storage1/dados/es91661/ExecAIGA/logs
 
 source /etc/profile.d/modules.sh 
 
@@ -15,4 +17,6 @@ echo "taskset -cp $CPU_LIST $PID_THIS_SHELL"
 #https://linux.die.net/man/1/taskset
 taskset -cp $CPU_LIST $PID_THIS_SHELL
 
-/data/apps/java/jre1.8.0_66/bin/java -Xmx2g -jar GAforMicroRTSCluster.jar
+/data/apps/java/jre1.8.0_66/bin/java -Xmx5g -XX:ParallelGCThreads=5 -jar microRTS.jar ${RESULTS} ${FOLDER}
+
+

@@ -1,5 +1,6 @@
 package principal;
 
+import ga.config.ConfigurationsGA;
 import ga.model.Population;
 import ga.util.RunGA;
 import ga.util.Evaluation.RatePopulation;
@@ -24,7 +25,7 @@ public class RunTests {
 		//RatePopulation fEval = new RoundRobinEval();
 		
 		
-		//p = fEval.evalPopulation(p);
+		//p = fEval.evalPopulation(p,1);
 		
 		//System.out.println("\n Pos avaliação");
 		//p.printWithValue();
@@ -32,7 +33,7 @@ public class RunTests {
 		//################################################################33
 	
 		
-		// * remover bloco de comentário
+		//* 
 		//aplicando o Algoritmo Genético
 		//criei uma classe para controlar a execução do GA.
 		RunGA ga = new RunGA();
@@ -46,6 +47,9 @@ public class RunTests {
 		popFinal.printWithValue();
 		
 		//Fase 6 - mostrar os mais aptos na população final
+		
+		//Fase 7 - finalizar 
+		fEval.finishProcess();
 		 
 	}
 

@@ -24,7 +24,7 @@ public final class ConfigurationsGA {
 	//tempo, em horas, que o GA será executado
 	public final static int TIME_GA_EXEC = 13;
 	//número de gerações que serão executadas
-	public final static int QTD_GENERATIONS = 20;
+	public final static int QTD_GENERATIONS = 30;
 	//---------------------------------------------------------------------------------
 	
 }

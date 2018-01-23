@@ -1,6 +1,9 @@
 package ga.util.Evaluation;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,10 +18,12 @@ import util.ManagerJob;
 public class RoundRobinEval implements RatePopulation{
 	//CONSTANTES
 	private static final int TOTAL_PARTIDAS_ROUND = 4;
+	private static final int TOTAL_SOA_CLIENTES   = 20;
+	//private static final String pathSOA = "/home/rubens/cluster/ExecAIGASOA/configSOA/SOA";
+	private static final String pathSOA = System.getProperty("user.dir").concat("/configSOA/SOA");
 	
-	//Classes de controle do cluster
-	private ManagerJob manager = new ManagerJob();
-	private LocalShell shell = new LocalShell();
+	//Classes de informação	
+	private int atualGeneration = 0;
 	
 	//Atributos locais
 	
@@ -27,7 +32,8 @@ public class RoundRobinEval implements RatePopulation{
 	}
 
 	@Override
-	public Population evalPopulation(Population population) {
+	public Population evalPopulation(Population population, int generation) {
+		this.atualGeneration = generation;
 		//limpa os valores existentes na population
 		population.clearValueChromosomes();
 		
@@ -36,8 +42,6 @@ public class RoundRobinEval implements RatePopulation{
 		
 		//Só permite continuar a execução após terminar os JOBS.
 		controllExecute();
-
-		//validar se todos executaram adequadamente
 				
 		//remove qualquer aquivo que não possua um vencedor
 		removeLogsEmpty();
@@ -123,14 +127,35 @@ public class RoundRobinEval implements RatePopulation{
 	 * Verifica se os jobs já foram encerrados no cluster.
 	 */
 	private void controllExecute(){
-		try {
-			while( Integer.valueOf(shell.executeCommand("echo $(qselect -u es91661 | wc -l)").trim()) > 1 ){
+		
+		while( hasSOAArq() ){
+			try {
 				Thread.sleep(50000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		} catch (NumberFormatException | IOException | InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
+		
+	}
+
+	/**
+	 * irá verificar se todas as pastas SOA estão vazias
+	 * @return True se estiver vazias
+	 */
+	private boolean hasSOAArq() {
+
+		for (int i = 1; i <= TOTAL_SOA_CLIENTES; i++) {
+			String strConfig = pathSOA+i+"/";
+			File f = new File(strConfig);
+			String[] children = f.list();
+			if(children.length > 0){
+				return true;
+			}
+			
+		}
+		
+		return false;
 	}
 
 	/**
@@ -138,6 +163,7 @@ public class RoundRobinEval implements RatePopulation{
 	 * @param population Que contém as configuracoes para a IA
 	 */
 	private void runBattles(Population population){
+		int numberSOA = 1;
 		//montar a lista de batalhas que irão ocorrer
 
 		for (int i = 0; i < TOTAL_PARTIDAS_ROUND; i++) {
@@ -146,29 +172,46 @@ public class RoundRobinEval implements RatePopulation{
 
 				for (Chromosome cIA2 : population.getChromosomes().keySet()) {
 					if(!cIA1.equals(cIA2)){
-						System.out.println("IA1 = "+ convertTuple(cIA1)+ "  IA2 = "+ convertTuple(cIA2));
+						//System.out.println("IA1 = "+ convertTuple(cIA1)+ "  IA2 = "+ convertTuple(cIA2));
 
-						//enviar jobs ao cluster
-						manager.configureArq( convertTuple(cIA1), convertTuple(cIA2), i );
-						shell.executeScript("/storage1/dados/es91661/ExecAIGA/aControlStartJob.sh");
+						//salvar arquivo na pasta log
+						String strConfig = pathSOA+numberSOA+"/"+convertBasicTuple(cIA1)+"#"+convertBasicTuple(cIA2)+"#"+i+"#"+atualGeneration+".txt";
+						File arqConfig = new File(strConfig);
+						if(!arqConfig.exists()){
+							try {
+								arqConfig.createNewFile();
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+						//escreve a configuração de teste
+						try {
+				            FileWriter arq = new FileWriter(arqConfig, false);
+				            PrintWriter gravarArq = new PrintWriter(arq);
+				            
+				            gravarArq.println(convertBasicTuple(cIA1)+"#"+convertBasicTuple(cIA2)+"#"+i+"#"+atualGeneration);
 
+				            gravarArq.flush();
+				            gravarArq.close();
+				            arq.close();
+				        } catch (IOException e) {
+				            // TODO Auto-generated catch block
+				            e.printStackTrace();
+				        }
+						
+						//controle da pasta SOA
+						numberSOA++;
+						if(numberSOA>TOTAL_SOA_CLIENTES){
+							numberSOA=1;
+						}
+						/*
 						try {
 							Thread.sleep(300);
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}
-
-						//controla o total de jobs em execução
-						try {
-							while( Integer.valueOf(shell.executeCommand("echo $(qselect -u es91661 | wc -l)").trim()) > ConfigurationsGA.NUMBER_JOBS ){
-								System.gc();
-								Thread.sleep(30000);
-							}
-						} catch (NumberFormatException | IOException | InterruptedException e) {
-							e.printStackTrace();
-						}
-
-
+						*/
 					}
 
 				}
@@ -194,6 +237,25 @@ public class RoundRobinEval implements RatePopulation{
 		}
 		
 		return tuple ;
+	}
+
+	/**
+	 * Envia o sinal de exit para todos os SOA clientes
+	 */
+	@Override
+	public void finishProcess() {
+		for (int i = 1; i <= TOTAL_SOA_CLIENTES; i++) {
+			String strConfig = pathSOA+i+"/exit";
+			File f = new File(strConfig);
+			try {
+				f.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		
 	}
 	
 }
