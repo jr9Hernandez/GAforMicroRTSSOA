@@ -16,7 +16,7 @@ public final class ConfigurationsGA {
 	//tamanho fixo dos pais para crossover
 	public final static int SIZE_PARENTSFORCROSSOVER = 4;
 	//taxa mutacao
-	public final static double MUTATION_RATE = 0.01;
+	public final static double MUTATION_RATE = 0.05;
 	//---------------------------------------------------------------------------------
 	//Controle do dispositivo de parada do GA
 	//Parametro: 0 = Tempo; 1 = Gerações
@@ -24,7 +24,7 @@ public final class ConfigurationsGA {
 	//tempo, em horas, que o GA será executado
 	public final static int TIME_GA_EXEC = 13;
 	//número de gerações que serão executadas
-	public final static int QTD_GENERATIONS = 2;
+	public final static int QTD_GENERATIONS = 50;
 	//---------------------------------------------------------------------------------
 	
 }

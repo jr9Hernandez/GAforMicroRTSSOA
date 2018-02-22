@@ -17,8 +17,8 @@ import util.ManagerJob;
 
 public class RoundRobinEval implements RatePopulation{
 	//CONSTANTES
-	private static final int TOTAL_PARTIDAS_ROUND = 1;
-	private static final int TOTAL_SOA_CLIENTES   = 40;
+	private static final int TOTAL_PARTIDAS_ROUND = 4;
+	private static final int TOTAL_SOA_CLIENTES   = 23;
 	//private static final String pathSOA = "/home/rubens/cluster/ExecAIGASOA/configSOA/SOA";
 	private static final String pathSOA = System.getProperty("user.dir").concat("/configSOA/SOA");
 	
