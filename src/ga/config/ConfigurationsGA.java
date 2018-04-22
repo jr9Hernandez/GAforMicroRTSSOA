@@ -8,7 +8,7 @@ public final class ConfigurationsGA {
 	//tamanho fixo da população
 	public final static int SIZE_POPULATION = 20;
 	//Total de jobs que serão enviados ao cluster
-	public final static int NUMBER_JOBS = 30;
+	public final static int NUMBER_JOBS = 40;
 	//tamanho fixo da elite
 	public final static int SIZE_ELITE = 10;
 	//tamanho fixo do k do torneio
@@ -24,7 +24,7 @@ public final class ConfigurationsGA {
 	//tempo, em horas, que o GA será executado
 	public final static int TIME_GA_EXEC = 13;
 	//número de gerações que serão executadas
-	public final static int QTD_GENERATIONS = 50;
+	public final static int QTD_GENERATIONS = 30;
 	//---------------------------------------------------------------------------------
 	
 }
