@@ -24,6 +24,8 @@ public class RunGA {
 		
 		//Fase 2 = avalia a população
 		population = evalFunction.evalPopulation(population,this.generations); 
+		System.out.println("Log - Generation = "+ this.generations);
+		population.printWithValue();
 		
 		resetControls();
 		//Fase 3 = critério de parada
@@ -38,6 +40,9 @@ public class RunGA {
 			
 			//atualiza a geração
 			updateGeneration();
+			
+			System.out.println("Log - Generation = "+ this.generations);
+			population.printWithValue();
 		}
 		
 		return population;
