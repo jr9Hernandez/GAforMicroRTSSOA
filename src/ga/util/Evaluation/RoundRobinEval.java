@@ -7,18 +7,15 @@ import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
-import ga.config.ConfigurationsGA;
 import ga.model.Chromosome;
 import ga.model.Population;
 import model.EvalResult;
 import util.LeitorLog;
-import util.LocalShell;
-import util.ManagerJob;
 
 public class RoundRobinEval implements RatePopulation{
 	//CONSTANTES
-	private static final int TOTAL_PARTIDAS_ROUND = 4;
-	private static final int TOTAL_SOA_CLIENTES   = 23;
+	private static final int TOTAL_PARTIDAS_ROUND = 1;
+	private static final int TOTAL_SOA_CLIENTES   = 35;
 	//private static final String pathSOA = "/home/rubens/cluster/ExecAIGASOA/configSOA/SOA";
 	private static final String pathSOA = System.getProperty("user.dir").concat("/configSOA/SOA");
 	
