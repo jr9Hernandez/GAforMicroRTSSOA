@@ -2,7 +2,7 @@ package ga.config;
 
 public final class ConfigurationsGA {
 	//total de scripts que serão utilizados no teste. ex.: 300 = 0-299
-	public final static int QTD_SCRIPTS = 300;
+	public final static int QTD_SCRIPTS = 13;
 	//tamanho fixo do cromossomo
 	public final static int SIZE_CHROMOSOME = 5;
 	//tamanho fixo da população
