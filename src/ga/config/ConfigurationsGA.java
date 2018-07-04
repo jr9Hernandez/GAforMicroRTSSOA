@@ -2,7 +2,7 @@ package ga.config;
 
 public final class ConfigurationsGA {
 	//total de scripts que serão utilizados no teste. ex.: 300 = 0-299
-	public final static int QTD_SCRIPTS = 13;
+	public final static int QTD_SCRIPTS = 300;
 	//tamanho fixo do cromossomo
 	public final static int SIZE_CHROMOSOME = 5;
 	//tamanho fixo da população
@@ -17,6 +17,12 @@ public final class ConfigurationsGA {
 	public final static int SIZE_PARENTSFORCROSSOVER = 4;
 	//taxa mutacao
 	public final static double MUTATION_RATE = 0.05;
+	//Increasing-decreasing index activated
+	public final static boolean INCREASING_INDEX=true;
+	//increasing rate
+	public final static double INCREASING_RATE = 0.2;
+	//decreasing rate
+	public final static double DECREASING_RATE = 0.2;
 	//---------------------------------------------------------------------------------
 	//Controle do dispositivo de parada do GA
 	//Parametro: 0 = Tempo; 1 = Gerações
