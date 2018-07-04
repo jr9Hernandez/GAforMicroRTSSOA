@@ -133,7 +133,7 @@ public class Reproduction {
 			double IncreasePercent = ConfigurationsGA.INCREASING_RATE;
 			boolean m = rand.nextFloat() <= IncreasePercent;
 
-			if(m)
+			if(m && newCh.getGenes().size()>2)
 			{
 				//newCh.getGenes().set(i, rand.nextInt(ConfigurationsGA.QTD_SCRIPTS));
 				newCh.getGenes().remove(rand.nextInt(newCh.getGenes().size()));
