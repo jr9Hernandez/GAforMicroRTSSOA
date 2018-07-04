@@ -112,7 +112,7 @@ public class Reproduction {
 			if(m)
 			{
 				//newCh.getGenes().set(i, rand.nextInt(ConfigurationsGA.QTD_SCRIPTS));
-				newCh.getGenes().add(ConfigurationsGA.QTD_SCRIPTS);
+				newCh.getGenes().add(rand.nextInt(ConfigurationsGA.QTD_SCRIPTS));
 			}
 			
 			chromosomesMutated.put(newCh, BigDecimal.ZERO);
@@ -130,10 +130,10 @@ public class Reproduction {
 			Chromosome newCh=new Chromosome();
 			newCh.setGenes((ArrayList<Integer>) c.getGenes().clone());
 
-			double IncreasePercent = ConfigurationsGA.INCREASING_RATE;
+			double IncreasePercent = ConfigurationsGA.DECREASING_RATE;
 			boolean m = rand.nextFloat() <= IncreasePercent;
 
-			if(m && newCh.getGenes().size()>2)
+			if(m && newCh.getGenes().size()>=2)
 			{
 				//newCh.getGenes().set(i, rand.nextInt(ConfigurationsGA.QTD_SCRIPTS));
 				newCh.getGenes().remove(rand.nextInt(newCh.getGenes().size()));
